@@ -19,8 +19,8 @@ window.addEventListener("DOMContentLoaded", function() {
       tabContent[b].classList.add("show");
     }
   }
-  info.addEventListener("click", function(event) {
-    let target = event.target;
+  info.addEventListener("click", e => {
+    let target = e.target;
     if (target && target.classList.contains("info-header-tab")) {
       for (let i = 0; i < tab.length; i++) {
         if (target == tab[i]) {
@@ -79,17 +79,15 @@ window.addEventListener("DOMContentLoaded", function() {
     close = document.querySelector(".popup-close");
 
   for (let more of mores) {
-
-    more.addEventListener("click", function() {
+    more.addEventListener("click", () => {
       overlay.style.display = "block";
       this.classList.add("more-splash");
       document.body.style.overflow = "hidden";
     });
-    close.addEventListener("click", function() {
+    close.addEventListener("click", () => {
       overlay.style.display = "none";
       more.classList.remove("more-splash");
       document.body.style.overflow = "";
     });
-    
   }
 });
