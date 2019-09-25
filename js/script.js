@@ -38,9 +38,9 @@ window.addEventListener("DOMContentLoaded", function() {
 
   function getTimeRemaning(endtime) {
     let t = Date.parse(endtime) - Date.parse(new Date()),
-      seconds = Math.floor((t / 1000) % 60),
-      minutes = Math.floor((t / 1000 / 60) % 60),
-      hours = Math.floor(t / (1000 * 60 * 60));
+      seconds = addZeroz(Math.floor((t / 1000) % 60)),
+      minutes = addZeroz(Math.floor((t / 1000 / 60) % 60)),
+      hours = addZeroz(Math.floor(t / (1000 * 60 * 60)));
     return {
       total: t,
       hours: hours,
@@ -48,7 +48,9 @@ window.addEventListener("DOMContentLoaded", function() {
       seconds: seconds
     };
   }
-
+  function addZeroz(number) {
+    return ("0" + number).slice(-2);
+  }
   function setClock(id, endtime) {
     let timer = document.getElementById(id),
       hours = timer.querySelector(".hours"),
@@ -63,8 +65,31 @@ window.addEventListener("DOMContentLoaded", function() {
       seconds.textContent = t.seconds;
       if (t.total <= 0) {
         clearInterval(timeInterval);
+        hours.textContent = "00";
+        minutes.textContent = "00";
+        seconds.textContent = "00";
       }
     }
   }
   setClock("timer", deadLine);
+  // modal
+
+  let mores = document.querySelectorAll(".more, .description-btn"),
+    overlay = document.querySelector(".overlay"),
+    close = document.querySelector(".popup-close");
+
+  for (let more of mores) {
+
+    more.addEventListener("click", function() {
+      overlay.style.display = "block";
+      this.classList.add("more-splash");
+      document.body.style.overflow = "hidden";
+    });
+    close.addEventListener("click", function() {
+      overlay.style.display = "none";
+      more.classList.remove("more-splash");
+      document.body.style.overflow = "";
+    });
+    
+  }
 });
